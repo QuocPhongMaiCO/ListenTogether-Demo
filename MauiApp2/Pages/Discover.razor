@@ -1,0 +1,35 @@
+﻿@page "/discover"
+
+@using MauiApp2.Data
+@inject SongItemService SongItemService
+
+<h1>.NET Podcasts - Discover - Category</h1>
+@if (songs != null)
+{
+<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var song in songs)
+			{
+				<tr>
+					<NavLink href="@($"song-list/{song.id}")">
+						<td>@song.name</td>
+					</NavLink>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+    private Category[] songs;
+
+	protected override async Task OnInitializedAsync()
+	{
+		songs = await SongItemService.GetCategoryAsync();
+	}
+}
